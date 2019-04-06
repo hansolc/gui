@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 #include "registration.h" //regstration page
+#include <QtSql>
+#include <QSqlDatabase>
 
 namespace Ui {
 class MainWindow;
@@ -19,9 +21,12 @@ public:
 private slots:
     void on_Button_register_clicked();
 
+    void on_Button_login_clicked();
+
 private:
     Ui::MainWindow *ui;
     Registration *regis_window;
+    QSqlDatabase db;
 };
 
 #endif // MAINWINDOW_H

@@ -1,6 +1,9 @@
 #include "registration.h"
 #include "ui_registration.h"
 #include <QMessageBox>
+#include <iostream>
+
+using namespace std;
 
 Registration::Registration(QWidget *parent) :
     QDialog(parent),
@@ -11,6 +14,7 @@ Registration::Registration(QWidget *parent) :
     ui->lineEdit_pw->setPlaceholderText("put your password");
     ui->lineEdit_ph->setPlaceholderText("put your phone number");
     ui->lineEdit_email->setPlaceholderText("put your email");
+
 }
 Registration::~Registration()
 {
@@ -23,10 +27,11 @@ void Registration::on_Button_registration_clicked()
     db = QSqlDatabase::addDatabase("QMYSQL");
     db.setHostName("127.0.0.1");            //temp local host
     db.setUserName("root");                 //db user name
-    db.setUserName("root");                 //db pw
-    db.setDatabaseName("qt5");              //db name
+    db.setPassword("root");                 //db pw
+    db.setDatabaseName("student_qt");              //db name
 
     if(db.open()) {
+        cout<<"db connected"<<endl;
         QString studentId = ui->lineEdit_id->text();
         QString password = ui->lineEdit_pw->text();
         QString email = ui->lineEdit_email->text();
@@ -36,13 +41,14 @@ void Registration::on_Button_registration_clicked()
         QSqlQuery qry;
 
         // query command here
-        qry.prepare("INSERT INTO [TABLE NAME] [ ] VALUES [ ]");
+        qry.prepare("INSERT INTO student_table (studentId, password, email, phone)"
+                    "VALUES (:studentId, :password, :email, :phone)");
 
         // binding your value, my value
-        qry.bindValue(" ", studentId);
-        qry.bindValue(" ", password);
-        qry.bindValue(" ", email);
-        qry.bindValue(" ", phone);
+        qry.bindValue(":studentId", studentId);
+        qry.bindValue(":password", password);
+        qry.bindValue(":email", email);
+        qry.bindValue(":phone", phone);
 
         if(qry.exec()) {
             QMessageBox::information(this, "Inserted", "Insert Success");
@@ -55,6 +61,5 @@ void Registration::on_Button_registration_clicked()
     else {
         QMessageBox::information(this, "DB Not Connected", "Database is not connected");
     }
-
-
+    db.close();
 }
