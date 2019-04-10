@@ -2,8 +2,6 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <QtSql>
-#include <QSqlDatabase>
 #include "registration.h"
 #include "makeroom.h"
 
@@ -30,7 +28,6 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    QSqlDatabase db;
     Registration *regis_window;
     MakeRoom *makeRoom_window;
 

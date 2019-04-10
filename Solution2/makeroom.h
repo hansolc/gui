@@ -2,8 +2,6 @@
 #define MAKEROOM_H
 
 #include <QDialog>
-#include <QtSql>
-#include <QSqlDatabase>
 
 namespace Ui {
 class MakeRoom;
@@ -22,7 +20,6 @@ private slots:
 
 private:
     Ui::MakeRoom *ui;
-    QSqlDatabase db;
 };
 
 #endif // MAKEROOM_H

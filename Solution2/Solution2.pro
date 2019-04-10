@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui sql
+QT       += core gui sql network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -28,13 +28,40 @@ SOURCES += \
         mainwindow.cpp \
     registration.cpp \
     makeroom.cpp \
-    labelclicked.cpp
+    labelclicked.cpp \
+    chattingclient.cpp \
+    client_app.cpp \
+    cthread.cpp \
+    json.cpp \
+    chattingclient.cpp \
+    client_app.cpp \
+    cthread.cpp \
+    json.cpp \
+    labelclicked.cpp \
+    main.cpp \
+    mainwindow.cpp \
+    makeroom.cpp \
+    registration.cpp
 
 HEADERS += \
         mainwindow.h \
     registration.h \
     makeroom.h \
-    labelclicked.h
+    labelclicked.h \
+    chatexception.h \
+    chattingclient.h \
+    client_app.h \
+    cthread.h \
+    json.h \
+    chatexception.h \
+    chattingclient.h \
+    client_app.h \
+    cthread.h \
+    json.h \
+    labelclicked.h \
+    mainwindow.h \
+    makeroom.h \
+    registration.h
 
 FORMS += \
         mainwindow.ui \
@@ -43,3 +70,5 @@ FORMS += \
 
 RESOURCES += \
     src.qrc
+
+LIBS+=-lwsock32

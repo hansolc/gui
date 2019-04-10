@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 #include <QMessageBox>
 #include "makeroom.h"
+#include "client_app.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -32,50 +33,9 @@ void MainWindow::on_Button_register_clicked()
 
 void MainWindow::on_Button_login_2_clicked()
 {
-    // db setting
-    db = QSqlDatabase::addDatabase("QMYSQL", "student_DB");
-    db.setHostName("127.0.0.1");
-    db.setUserName("root");
-    db.setPassword("root");
-    db.setDatabaseName("student_qt");
-
-    QString studentId = ui->lineEdit_id_2->text();
-    QString password = ui->lineEdit_pw_2->text();
-
-    if(db.open()) {
-
-        QSqlQuery qry(QSqlDatabase::database("student_DB"));
-
-        qry.prepare(QString("SELECT * FROM student_table WHERE studentId = :studentId AND password = :password"));
-
-        qry.bindValue(":studentId", studentId);
-        qry.bindValue(":password", password);
-
-        if(!qry.exec()) {
-            QMessageBox::information(this, "qry Failed", "qry failed to execute");
-        }
-        else {
-            while(qry.next()) {
-                QString studentIdFromDB = qry.value(1).toString();
-                QString passwordFromDB = qry.value(2).toString();
-
-                if(studentIdFromDB == studentId && passwordFromDB == password) {
-                    QMessageBox::information(this, "Success", "Login Success");
-
-                    //after Login Code here
-                    ui->stackedWidget->setCurrentIndex(1);
-                }
-                else {
-                    QMessageBox::information(this, "Failed", "Login Failed");
-                }
-            }
-        }
-    }
-    else {
-        QMessageBox::information(this, "DB not Connected", "database is not connected");
-    }
-
-
+    // Try Connect Server
+    client_App app;
+    app.start();
 }
 
 // Making Room
