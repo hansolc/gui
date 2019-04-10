@@ -1,7 +1,7 @@
 #include "registration.h"
 #include "ui_registration.h"
-#include <QMessageBox>
 #include <iostream>
+#include <QMessageBox>
 
 using namespace std;
 
@@ -10,12 +10,12 @@ Registration::Registration(QWidget *parent) :
     ui(new Ui::Registration)
 {
     ui->setupUi(this);
-    ui->lineEdit_id->setPlaceholderText("Put your Id");
-    ui->lineEdit_pw->setPlaceholderText("put your password");
-    ui->lineEdit_ph->setPlaceholderText("put your phone number");
-    ui->lineEdit_email->setPlaceholderText("put your email");
-
+    ui->lineEdit_id->setPlaceholderText("put you id here");
+    ui->lineEdit_pw->setPlaceholderText("put you pw here");
+    ui->lineEdit_pw->setPlaceholderText("put you phone-number here");
+    ui->lineEdit_email->setPlaceholderText("put you email here");
 }
+
 Registration::~Registration()
 {
     delete ui;
@@ -61,5 +61,4 @@ void Registration::on_Button_registration_clicked()
     else {
         QMessageBox::information(this, "DB Not Connected", "Database is not connected");
     }
-    db.close();
 }

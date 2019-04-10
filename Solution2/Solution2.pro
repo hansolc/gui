@@ -1,6 +1,6 @@
 #-------------------------------------------------
 #
-# Project created by QtCreator 2019-04-05T00:15:13
+# Project created by QtCreator 2019-04-09T16:45:33
 #
 #-------------------------------------------------
 
@@ -8,7 +8,7 @@ QT       += core gui sql
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = Solution
+TARGET = Solution2
 TEMPLATE = app
 
 # The following define makes your compiler emit warnings if you use
@@ -26,15 +26,20 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-    registration.cpp
+    registration.cpp \
+    makeroom.cpp \
+    labelclicked.cpp
 
 HEADERS += \
         mainwindow.h \
-    registration.h
+    registration.h \
+    makeroom.h \
+    labelclicked.h
 
 FORMS += \
         mainwindow.ui \
-    registration.ui
+    registration.ui \
+    makeroom.ui
 
 RESOURCES += \
     src.qrc
