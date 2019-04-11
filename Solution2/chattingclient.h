@@ -8,9 +8,12 @@
 #include <cstdio>
 #include <WinSock2.h>
 #include "CThread.h"
-#include <thread>
 #include "ChatException.h"
+#include "mainwindow.h"
 #include "json.h"
+#include <iostream>
+
+using namespace std;
 
 class ChattingClient;
 class SendThread;
@@ -25,8 +28,14 @@ typedef struct _MSG {
     char data[256];
 } Message;
 
+namespace MessageType
+{
+enum Type { LOGIN_PASS = 1, TEXT_MESSAGE = 2, ENTERROOM_REQUSET = 3 };
+}
+
 class ChattingClient : public CThread {
 private:
+    //MainWindow *mainwindow;
     SendThread *st;
     RecvThread *rt;
     SOCKET client_socket;
@@ -40,7 +49,6 @@ public:
     ChattingClient& getChattingClient();
     SOCKET& getClientSocket();
     void RedirectConnection(const char *ip, int port);
-    void RedirectSocket(SOCKET sock);
     void sendMessage(std::string message);
     virtual DWORD run(void);
 
@@ -66,7 +74,6 @@ public:
     void RedirectSocket(SOCKET sock);
     virtual DWORD run(void);
     bool exitUser(const char *buf);
-    void printcin(const char*);
 };
 
 class RecvThread : public SendRecvInterface {

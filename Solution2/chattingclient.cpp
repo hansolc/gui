@@ -1,11 +1,10 @@
 #pragma once
 
 #include "ChattingClient.h"
-#include "client_App.h"
 
 const int ChattingClient::MAXSTRLEN = 255;
 
-ChattingClient::ChattingClient(const char *ip, int port) {
+ChattingClient::ChattingClient(MainWindow *mainwindow,const char *ip, int port) {
     WSADATA wsaData;
     WSAStartup(MAKEWORD(2, 2), &wsaData);
 
@@ -15,6 +14,7 @@ ChattingClient::ChattingClient(const char *ip, int port) {
         WSACleanup();
     }
 
+    this->mainwindow = mainwindow;
     memset(&this->server_address, 0, sizeof(this->server_address));
     this->server_address.sin_addr.S_un.S_addr = inet_addr(ip);
     this->server_address.sin_port = htons(port);
@@ -36,14 +36,6 @@ ChattingClient& ChattingClient::getChattingClient()
 SOCKET& ChattingClient::getClientSocket()
 {
     return this->client_socket;
-}
-
-void ChattingClient::RedirectSocket(SOCKET sock)
-{
-    if(st!=nullptr && st->isRunning())
-    {
-        st->RedirectSocket(sock);
-    }
 }
 
 void ChattingClient::RedirectConnection(const char *ip, int port)
@@ -81,7 +73,6 @@ void ChattingClient::sendMessage(std::string message)
 
 DWORD ChattingClient::run(void)
 {
-    cout << "run!" << endl;
     connectServer();
     this->rt = new RecvThread(this->client_socket, getChattingClient());
     rt->start();
@@ -175,8 +166,6 @@ void SendThread::RedirectSocket(SOCKET sock)
 
 DWORD SendThread::run(void) {
     try {
-        //std::string str = ConvertMessageToJson();
-        //const char* message = str.c_str();
         const char* message = this->message.c_str();
         if (exitUser(message)) {
             throw ChatException(2100);
@@ -220,7 +209,6 @@ Json::Value RecvThread::ParseMessage(std::string message)
 DWORD RecvThread::run(void) {
     char buf[ChattingClient::MAXSTRLEN];
     while (true) {
-        cout << "recv running" << endl;
         try {
             if (recvMessage(this->client_socket, buf) >= 0)
             {
@@ -233,7 +221,7 @@ DWORD RecvThread::run(void) {
                 {
                     if (JsonToMessage["pass"].asBool() == true)
                     {
-                        cout << "log-in pass." << endl;
+                        //cout << "log-in pass." << endl;
                         std::string temp(JsonToMessage["ip"].asString());
                         std::vector<char> writable(temp.begin(), temp.end());
                         writable.push_back('\0');
@@ -246,19 +234,17 @@ DWORD RecvThread::run(void) {
                 }
                 case MessageType::TEXT_MESSAGE:
                 {
-                    cout << JsonToMessage["id"] << " : " << JsonToMessage["text"] << endl;
+                    //cout << JsonToMessage["id"] << " : " << JsonToMessage["text"] << endl;
                     break;
                 }
                 default:
                     break;
-
                 }
             }
             else // 리디렉션 예외가 발생했을 경우
             {
-                cout << "log-in server connection redirects to main server socket." << endl;
+                //cout << "log-in server connection redirects to main server socket." << endl;
                 RedirectSocket(chatting_client.getClientSocket());
-                chatting_client.RedirectSocket(chatting_client.getClientSocket());
             }
         }
         catch (ChatException e) {

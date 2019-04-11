@@ -2,7 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "client_app.h"
+#include "chattingclient.h"
 #include "registration.h"
 #include "makeroom.h"
 
@@ -17,6 +17,7 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+    void ChangeStackedWidget(int index);
 
 private slots:
     void on_Button_register_clicked();
@@ -26,7 +27,7 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    client_App *clientApp;
+    ChattingClient *chattingClient;
     Registration *regis_window;
     MakeRoom *makeRoom_window;
 

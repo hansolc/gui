@@ -2,7 +2,7 @@
 #include "ui_mainwindow.h"
 #include <QMessageBox>
 #include "makeroom.h"
-#include "client_app.h"
+#include "chattingclient.h"
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -13,9 +13,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     ui->lineEdit_id_2->setPlaceholderText("Enter your student ID");
     ui->lineEdit_pw_2->setPlaceholderText("Enter your password");
 
-    this->clientApp = new client_App();
-    clientApp->start();
-    cout << "end" << endl;
+    char buf[16] = "127.0.0.1";
+    int port = 3490;
+
+    this->chattingClient = new ChattingClient(*this, buf, port);
+    chattingClient->start();
     // about after login page
     // ***server: get room numbers
 }
@@ -23,6 +25,12 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::ChangeStackedWidget(int index)
+{
+
+    ui->stackedWidget->setCurrentIndex(index);
 }
 
 void MainWindow::on_Button_register_clicked()
@@ -42,7 +50,7 @@ void MainWindow::on_Button_login_2_clicked()
     root["id"] = "abc"; // 여기에 gui 정보 id, password 입력해서 메세지 패키징 할 것.
     root["password"] = "123";
     str = fastWriter.write(root);
-    clientApp->sendMessage(str);
+    chattingClient->sendMessage(str);
 }
 
 // Making Room

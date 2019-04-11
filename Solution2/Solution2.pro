@@ -29,10 +29,8 @@ SOURCES += \
     registration.cpp \
     makeroom.cpp \
     labelclicked.cpp \
-    client_app.cpp \
     cthread.cpp \
     json.cpp \
-    client_app.cpp \
     cthread.cpp \
     json.cpp \
     labelclicked.cpp \
@@ -49,12 +47,9 @@ HEADERS += \
     labelclicked.h \
     chatexception.h \
     chattingclient.h \
-    client_app.h \
     cthread.h \
     json.h \
     chatexception.h \
-    chattingclient.h \
-    client_app.h \
     cthread.h \
     json.h \
     labelclicked.h \
