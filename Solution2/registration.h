@@ -1,3 +1,5 @@
+#pragma once
+
 #ifndef REGISTRATION_H
 #define REGISTRATION_H
 

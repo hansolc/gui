@@ -1,10 +1,10 @@
 #pragma once
 
-#include "ChattingClient.h"
+#include "chattingclient.h"
 
 const int ChattingClient::MAXSTRLEN = 255;
 
-ChattingClient::ChattingClient(MainWindow *mainwindow,const char *ip, int port) {
+ChattingClient::ChattingClient(MainWindow& mainWindow ,const char *ip, int port) {
     WSADATA wsaData;
     WSAStartup(MAKEWORD(2, 2), &wsaData);
 
@@ -55,6 +55,7 @@ void ChattingClient::RedirectConnection(const char *ip, int port)
     this->server_address.sin_family = AF_INET;
 
     connectServer();
+    mainwindow->ChangeStackedWidget(1);
 }
 
 void ChattingClient::connectServer()

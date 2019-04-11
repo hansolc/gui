@@ -1,8 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QMessageBox>
-#include "makeroom.h"
-#include "chattingclient.h"
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -17,7 +15,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     int port = 3490;
 
     this->chattingClient = new ChattingClient(*this, buf, port);
-    chattingClient->start();
+    this->chattingClient->start();
     // about after login page
     // ***server: get room numbers
 }
@@ -29,8 +27,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::ChangeStackedWidget(int index)
 {
-
-    ui->stackedWidget->setCurrentIndex(index);
+    //ui->stackedWidget->setCurrentIndex(index); 수정 필요?
 }
 
 void MainWindow::on_Button_register_clicked()
@@ -50,7 +47,7 @@ void MainWindow::on_Button_login_2_clicked()
     root["id"] = "abc"; // 여기에 gui 정보 id, password 입력해서 메세지 패키징 할 것.
     root["password"] = "123";
     str = fastWriter.write(root);
-    chattingClient->sendMessage(str);
+    this->chattingClient->sendMessage(str);
 }
 
 // Making Room

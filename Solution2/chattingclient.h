@@ -3,14 +3,15 @@
 #ifndef __CHATTINGCLIENT_CONF__
 #define __CHATTINGCLIENT_CONF__
 
+#include <WinSock2.h>
+#include <Windows.h>
+#include "mainwindow.h"
+#include "json.h"
+#include "cthread.h"
+#include "chatexception.h"
 #include <iostream>
 #include <cstring>
 #include <cstdio>
-#include <WinSock2.h>
-#include "CThread.h"
-#include "ChatException.h"
-#include "mainwindow.h"
-#include "json.h"
 #include <iostream>
 
 using namespace std;
@@ -19,6 +20,8 @@ class ChattingClient;
 class SendThread;
 class RecvThread;
 class SendRecvInterface;
+
+class MainWindow;
 
 namespace UserCommand {
 const char* const EXIT = "/exit";
@@ -35,7 +38,7 @@ enum Type { LOGIN_PASS = 1, TEXT_MESSAGE = 2, ENTERROOM_REQUSET = 3 };
 
 class ChattingClient : public CThread {
 private:
-    //MainWindow *mainwindow;
+    MainWindow *mainwindow;
     SendThread *st;
     RecvThread *rt;
     SOCKET client_socket;
@@ -43,7 +46,7 @@ private:
     void connectServer();
 
 public:
-    ChattingClient(const char *ip, int port);
+    ChattingClient(MainWindow& mainWindow, const char *ip, int port);
     ~ChattingClient();
 
     ChattingClient& getChattingClient();

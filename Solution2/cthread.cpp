@@ -1,4 +1,4 @@
-#include "CThread.h"
+#include "cthread.h"
 
 DWORD WINAPI CThread::StaticThreadStart(LPVOID lpParam) {
     CThread* pThread = (CThread*)lpParam;

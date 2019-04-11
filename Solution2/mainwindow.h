@@ -1,10 +1,14 @@
+#pragma once
+
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <QMainWindow>
 #include "chattingclient.h"
 #include "registration.h"
 #include "makeroom.h"
+#include <QMainWindow>
+
+class ChattingClient;
 
 namespace Ui {
 class MainWindow;
@@ -30,7 +34,6 @@ private:
     ChattingClient *chattingClient;
     Registration *regis_window;
     MakeRoom *makeRoom_window;
-
 };
 
 #endif // MAINWINDOW_H

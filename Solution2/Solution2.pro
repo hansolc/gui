@@ -24,20 +24,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 
 SOURCES += \
-        main.cpp \
-        mainwindow.cpp \
-    registration.cpp \
-    makeroom.cpp \
-    labelclicked.cpp \
-    cthread.cpp \
-    json.cpp \
-    cthread.cpp \
-    json.cpp \
-    labelclicked.cpp \
     main.cpp \
     mainwindow.cpp \
-    makeroom.cpp \
     registration.cpp \
+    makeroom.cpp \
+    labelclicked.cpp \
+    cthread.cpp \
+    json.cpp \
     chattingclient.cpp
 
 HEADERS += \
@@ -49,16 +42,9 @@ HEADERS += \
     chattingclient.h \
     cthread.h \
     json.h \
-    chatexception.h \
-    cthread.h \
-    json.h \
-    labelclicked.h \
-    mainwindow.h \
-    makeroom.h \
-    registration.h \
 
 FORMS += \
-        mainwindow.ui \
+    mainwindow.ui \
     registration.ui \
     makeroom.ui
 
