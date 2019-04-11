@@ -29,11 +29,9 @@ SOURCES += \
     registration.cpp \
     makeroom.cpp \
     labelclicked.cpp \
-    chattingclient.cpp \
     client_app.cpp \
     cthread.cpp \
     json.cpp \
-    chattingclient.cpp \
     client_app.cpp \
     cthread.cpp \
     json.cpp \
@@ -41,7 +39,8 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     makeroom.cpp \
-    registration.cpp
+    registration.cpp \
+    chattingclient.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -61,7 +60,7 @@ HEADERS += \
     labelclicked.h \
     mainwindow.h \
     makeroom.h \
-    registration.h
+    registration.h \
 
 FORMS += \
         mainwindow.ui \
@@ -71,4 +70,4 @@ FORMS += \
 RESOURCES += \
     src.qrc
 
-LIBS+=-lwsock32
+LIBS += -lwsock32 \

@@ -9,29 +9,29 @@
 
 class CThread {
 private:
-        HANDLE hThread;
-        DWORD  ThreadID;
+    HANDLE hThread;
+    DWORD  ThreadID;
 
-        static DWORD WINAPI StaticThreadStart( LPVOID lpParam );
+    static DWORD WINAPI StaticThreadStart( LPVOID lpParam );
 
 protected:
-        virtual DWORD run(void) = 0;
+    virtual DWORD run(void) = 0;
 
 public:
-        CThread() : hThread( NULL ), ThreadID( 0 ) {}
+    CThread() : hThread( NULL ), ThreadID( 0 ) {}
 
-        void ThreadClose() {
-                if (hThread)
-                {
-                        TerminateThread(hThread, ThreadID);
-                        CloseHandle(hThread);
-                }
+    void ThreadClose() {
+        if (hThread)
+        {
+            CloseHandle(hThread);
+            ExitThread(ThreadID);
         }
+    }
 
-        bool start();
-        void join();
-        bool isRunning();
-        DWORD getExitCode();
+    bool start();
+    void join();
+    bool isRunning();
+    DWORD getExitCode();
 };
 
 

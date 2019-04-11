@@ -4,8 +4,7 @@
 #include "makeroom.h"
 #include "client_app.h"
 
-MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent),
+MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
@@ -14,9 +13,11 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->lineEdit_id_2->setPlaceholderText("Enter your student ID");
     ui->lineEdit_pw_2->setPlaceholderText("Enter your password");
 
+    this->clientApp = new client_App();
+    clientApp->start();
+    cout << "end" << endl;
     // about after login page
     // ***server: get room numbers
-
 }
 
 MainWindow::~MainWindow()
@@ -33,9 +34,15 @@ void MainWindow::on_Button_register_clicked()
 
 void MainWindow::on_Button_login_2_clicked()
 {
-    // Try Connect Server
-    client_App app;
-    app.start();
+    // 로그인 버튼 클릭 기능
+    Json::Value root;
+    Json::FastWriter fastWriter;
+    std::string str;
+    root["type"] = MessageType::LOGIN_PASS;
+    root["id"] = "abc"; // 여기에 gui 정보 id, password 입력해서 메세지 패키징 할 것.
+    root["password"] = "123";
+    str = fastWriter.write(root);
+    clientApp->sendMessage(str);
 }
 
 // Making Room

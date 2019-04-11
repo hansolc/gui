@@ -13,25 +13,24 @@ using std::endl;
 
 namespace MessageType
 {
-        enum Type { LOGIN_PASS = 1, TEXT_MESSAGE = 2, ENTERROOM_REQUSET = 3 };
+enum Type { LOGIN_PASS = 1, TEXT_MESSAGE = 2, ENTERROOM_REQUSET = 3 };
 }
 
-class client_App {
+class client_App : public CThread {
 private:
-        char serverip[16];
-        int serverport;
-        ChattingClient *chattingclient;
+    char serverip[16];
+    int serverport;
+    ChattingClient *chattingclient;
 
 public:
-        client_App();
-        ~client_App();
+    client_App();
+    ~client_App();
 
-        void start();
-        void printStart();
-        void printExit();
-        void printError();
-
-        static HANDLE hMutex;
+    void printStart();
+    void printExit();
+    void printError();
+    virtual DWORD run(void);
+    void sendMessage(std::string);
 };
 
 #endif

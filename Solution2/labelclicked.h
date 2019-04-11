@@ -16,10 +16,10 @@ public:
     ~LabelClicked();
 
 signals:
- void clicked();
+    void clicked();
 
 protected:
- void mouseReleaseEvent( QMouseEvent * event ) ;
+    void mouseReleaseEvent( QMouseEvent * event ) ;
 };
 
 #endif // LABELCLICKED_H
