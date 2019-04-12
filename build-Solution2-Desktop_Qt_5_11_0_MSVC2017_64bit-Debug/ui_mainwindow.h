@@ -46,6 +46,7 @@ public:
     QPushButton *Button_makeRoom;
     QPushButton *Button_toHome;
     QLabel *label_makeRoom;
+    QWidget *page;
 
     void setupUi(QMainWindow *MainWindow)
     {
@@ -180,6 +181,9 @@ public:
         label_makeRoom->setObjectName(QStringLiteral("label_makeRoom"));
         label_makeRoom->setGeometry(QRect(40, 70, 671, 41));
         stackedWidget->addWidget(after_log_page);
+        page = new QWidget();
+        page->setObjectName(QStringLiteral("page"));
+        stackedWidget->addWidget(page);
         MainWindow->setCentralWidget(centralWidget);
 
         retranslateUi(MainWindow);

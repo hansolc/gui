@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QMessageBox>
+#include <iostream>
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -27,7 +28,8 @@ MainWindow::~MainWindow()
 
 void MainWindow::ChangeStackedWidget(int index)
 {
-    //ui->stackedWidget->setCurrentIndex(index); 수정 필요?
+    std::cout << index << std::endl;
+    ui->stackedWidget->setCurrentIndex(1);
 }
 
 void MainWindow::on_Button_register_clicked()
@@ -39,15 +41,18 @@ void MainWindow::on_Button_register_clicked()
 
 void MainWindow::on_Button_login_2_clicked()
 {
-    // 로그인 버튼 클릭 기능
+    // log-in function
     Json::Value root;
     Json::FastWriter fastWriter;
     std::string str;
+
     root["type"] = MessageType::LOGIN_PASS;
-    root["id"] = "abc"; // 여기에 gui 정보 id, password 입력해서 메세지 패키징 할 것.
-    root["password"] = "123";
+    root["id"] = ui->lineEdit_id_2->text().toStdString();
+    root["password"] = ui->lineEdit_pw_2->text().toStdString();
+
     str = fastWriter.write(root);
     this->chattingClient->sendMessage(str);
+    //ui->stackedWidget->setCurrentIndex(1);
 }
 
 // Making Room
