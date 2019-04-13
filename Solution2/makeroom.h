@@ -1,5 +1,3 @@
-#pragma once
-
 #ifndef MAKEROOM_H
 #define MAKEROOM_H
 

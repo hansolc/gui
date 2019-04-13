@@ -272,7 +272,6 @@ border-image:url(:/images/logo.png);
       </property>
      </widget>
     </widget>
-    <widget class="QWidget" name="page"/>
    </widget>
   </widget>
  </widget>

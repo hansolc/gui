@@ -1,9 +1,14 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QMessageBox>
+#include "makeroom.h"
+#include "client_app.h"
 #include <iostream>
 
-MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
+using namespace std;
+
+MainWindow::MainWindow(QWidget *parent) :
+    QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
@@ -12,24 +17,14 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     ui->lineEdit_id_2->setPlaceholderText("Enter your student ID");
     ui->lineEdit_pw_2->setPlaceholderText("Enter your password");
 
-    char buf[16] = "127.0.0.1";
-    int port = 3490;
-
-    this->chattingClient = new ChattingClient(*this, buf, port);
-    this->chattingClient->start();
     // about after login page
     // ***server: get room numbers
+
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
-}
-
-void MainWindow::ChangeStackedWidget(int index)
-{
-    std::cout << index << std::endl;
-    ui->stackedWidget->setCurrentIndex(1);
 }
 
 void MainWindow::on_Button_register_clicked()
@@ -41,18 +36,13 @@ void MainWindow::on_Button_register_clicked()
 
 void MainWindow::on_Button_login_2_clicked()
 {
-    // log-in function
-    Json::Value root;
-    Json::FastWriter fastWriter;
-    std::string str;
 
-    root["type"] = MessageType::LOGIN_PASS;
-    root["id"] = ui->lineEdit_id_2->text().toStdString();
-    root["password"] = ui->lineEdit_pw_2->text().toStdString();
 
-    str = fastWriter.write(root);
-    this->chattingClient->sendMessage(str);
-    //ui->stackedWidget->setCurrentIndex(1);
+    // Try Connect Server
+    gt->run();
+
+    // go to next page
+
 }
 
 // Making Room
