@@ -12,6 +12,8 @@
 #include <iostream>
 #include <cstring>
 #include <cstdio>
+#include <QObject>
+#include <gthread.h>
 
 using namespace std;
 
@@ -35,7 +37,7 @@ namespace MessageType
 enum Type { LOGIN_PASS = 1, TEXT_MESSAGE = 2, ENTERROOM_REQUSET = 3 };
 }
 
-class ChattingClient : public CThread {
+class ChattingClient : public CThread{
 private:
     MainWindow *mainwindow;
     SendThread *st;

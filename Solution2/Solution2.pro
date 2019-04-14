@@ -31,7 +31,8 @@ SOURCES += \
     labelclicked.cpp \
     cthread.cpp \
     json.cpp \
-    chattingclient.cpp
+    chattingclient.cpp \
+    gthread.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -42,6 +43,7 @@ HEADERS += \
     chattingclient.h \
     cthread.h \
     json.h \
+    gthread.h
 
 FORMS += \
     mainwindow.ui \

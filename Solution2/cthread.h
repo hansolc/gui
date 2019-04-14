@@ -6,8 +6,10 @@
 #include <iostream>
 #include <Windows.h>
 #include "ChatException.h"
+#include <QThread>
+#include <QObject>
 
-class CThread {
+class CThread{
 private:
     HANDLE hThread;
     DWORD  ThreadID;
@@ -32,6 +34,8 @@ public:
     void join();
     bool isRunning();
     DWORD getExitCode();
+signals:
+    void changeStack();
 };
 
 

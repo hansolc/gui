@@ -19,6 +19,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     this->chattingClient->start();
     // about after login page
     // ***server: get room numbers
+
+    //connect: when changeIndex trigger -> changeStack slot start
+    connect(this, SIGNAL(changeIndex(int)), this, SLOT(changeStack(int)));
 }
 
 MainWindow::~MainWindow()
@@ -26,17 +29,21 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::ChangeStackedWidget(int index)
-{
-    std::cout << index << std::endl;
-    ui->stackedWidget->setCurrentIndex(1);
-}
-
 void MainWindow::on_Button_register_clicked()
 {
     // create object 'Registration'
     regis_window = new Registration(this);
     regis_window->show();
+}
+
+void MainWindow::changeStack(int index)
+{
+    std::cout<<"in changeStack slot"<<std::endl;
+    if(index != currentIndex) {
+        currentIndex = index;
+        ui->stackedWidget->setCurrentIndex(currentIndex);
+        //emit changeIndex(currentIndex);
+    }
 }
 
 void MainWindow::on_Button_login_2_clicked()
@@ -52,7 +59,6 @@ void MainWindow::on_Button_login_2_clicked()
 
     str = fastWriter.write(root);
     this->chattingClient->sendMessage(str);
-    //ui->stackedWidget->setCurrentIndex(1);
 }
 
 // Making Room
