@@ -8,6 +8,8 @@
 #include "makeroom.h"
 #include <QMainWindow>
 #include <gthread.h>
+#include <QListWidget>
+#include "json.h"
 
 class ChattingClient;
 
@@ -21,6 +23,9 @@ class MainWindow : public QMainWindow
 
 public:
     explicit MainWindow(QWidget *parent = 0);
+//    Json::Value root;
+//    Json::FastWriter fastWriter;
+//    std::string str;
     ~MainWindow();
 
 private slots:
@@ -29,19 +34,36 @@ private slots:
     void on_Button_makeRoom_clicked();
     void on_Button_toHome_clicked();
 
+    void on_pushButton_clicked();
+
+    void on_send_clicked();
+
 public slots:
-    void changeStack(int index);
+    void changeStack(int index, int numS1);
+    void changeStackToC1();
+    void setNum(int updateStudnet);
+    int getNum() const {return numS515;}
 
 private:
     Ui::MainWindow *ui;
     ChattingClient *chattingClient;
     Registration *regis_window;
-    MakeRoom *makeRoom_window;
+    MakeRoom *makeRoom;
     GThread *gThread;
     int currentIndex;
+    QListWidgetItem* item;
+    int numS515;
+
+    //for table widget
+    enum Columns
+    {
+        ROOMNUM, SUBJECT, STUDENTNUM, BUTTON
+
+    };
 
 signals:
-    void changeIndex(int index);
+    void changeIndex(int index, int numS);
+    void numChanged(int newNum);
 };
 
 #endif // MAINWINDOW_H

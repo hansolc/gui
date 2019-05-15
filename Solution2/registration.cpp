@@ -2,6 +2,8 @@
 #include "ui_registration.h"
 #include <iostream>
 #include <QMessageBox>
+#include "json.h"
+#include "chattingclient.h"
 
 using namespace std;
 
@@ -23,5 +25,15 @@ Registration::~Registration()
 
 void Registration::on_Button_registration_clicked()
 {
+//    //here about db
+//    Json::Value root;
+//    Json::FastWriter fastWriter;
+//    std::string str;
 
+//    root["type"] = MessageType::NEW_ACCOUNT;
+//    root["id"] = ui->lineEdit_id->text().toStdString();
+//    root["password"] = ui->lineEdit_pw->text().toStdString();
+
+//    str = fastWriter.write(root);
+//    this->chattingClient->sendMessage(str);
 }

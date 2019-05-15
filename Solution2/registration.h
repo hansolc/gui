@@ -6,6 +6,7 @@
 #include <QDialog>
 #include <QtSql>
 #include <QSqlDatabase>
+#include "json.h"
 
 namespace Ui {
 class Registration;
@@ -24,6 +25,7 @@ private slots:
 
 private:
     Ui::Registration *ui;
+    //ChattingClient *chattingClient;
 };
 
 #endif // REGISTRATION_H

@@ -19,7 +19,7 @@
   </property>
   <property name="styleSheet">
    <string notr="true">#MainWindow {
-background-color:url(:/images/bg.jpg)
+border-image:url(:/images/bg1.jpg)0 0 0 0 stretch stretch;
 }</string>
   </property>
   <widget class="QWidget" name="centralWidget">
@@ -38,245 +38,374 @@ font-family:century gothic;
 font-size: 24px;
 }
 
+#frame
+{
+	background:rgba(151, 214, 255,0.6);
+	border-radius:15px;
+}
 
 #login {
-border-image:url(:/images/bg.jpg);
+	border-image:url(:/images/bg1.jpg)0 0 0 0 stretch stretch;
+	background:rgba(0,0,0,0.3);
 }
 
-QPushButton
-{
-background:rgb(184, 244, 255);
-border-radius:60px;
+QLabel {
+	color:#fff;
+	background:transparent;
+	font-size:30px;
 }
 
-QPushButton:hover
+QToolButton
 {
-color:#333;
-border-radius:15px;
-background:#49ebff;
+	background:rgba(0, 0, 0,0);
+	border-radius:40px;
 }
 
 #after_log_page {
-border-image:url(:/images/bg.jpg);
+border-image:url(:/images/bg1.jpg)0 0 0 0 stretch stretch;
 }
 </string>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="login">
-     <widget class="QGroupBox" name="signin">
-      <property name="geometry">
-       <rect>
-        <x>190</x>
-        <y>250</y>
-        <width>371</width>
-        <height>271</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <family>century gothic</family>
-        <pointsize>-1</pointsize>
-       </font>
-      </property>
-      <property name="layoutDirection">
-       <enum>Qt::LeftToRight</enum>
-      </property>
-      <property name="styleSheet">
-       <string notr="true"/>
-      </property>
-      <property name="title">
-       <string>Log In</string>
-      </property>
-      <layout class="QVBoxLayout" name="verticalLayout_4">
-       <item>
-        <layout class="QVBoxLayout" name="verticalLayout_5">
-         <item>
-          <widget class="QLabel" name="label_id_2">
-           <property name="font">
-            <font>
-             <family>century gothic</family>
-             <pointsize>-1</pointsize>
-            </font>
-           </property>
-           <property name="text">
-            <string>Student ID</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLineEdit" name="lineEdit_id_2">
-           <property name="font">
-            <font>
-             <family>century gothic</family>
-             <pointsize>-1</pointsize>
-            </font>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <layout class="QVBoxLayout" name="verticalLayout_6">
-         <item>
-          <widget class="QLabel" name="label_pw_2">
-           <property name="font">
-            <font>
-             <family>century gothic</family>
-             <pointsize>-1</pointsize>
-            </font>
-           </property>
-           <property name="text">
-            <string>Password</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLineEdit" name="lineEdit_pw_2">
-           <property name="font">
-            <font>
-             <family>century gothic</family>
-             <pointsize>-1</pointsize>
-            </font>
-           </property>
-           <property name="echoMode">
-            <enum>QLineEdit::Password</enum>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <widget class="QPushButton" name="Button_login_2">
-         <property name="font">
-          <font>
-           <family>century gothic</family>
-           <pointsize>-1</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>Log In</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QPushButton" name="Button_register">
-      <property name="geometry">
-       <rect>
-        <x>590</x>
-        <y>680</y>
-        <width>181</width>
-        <height>51</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <family>century gothic</family>
-        <pointsize>-1</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>Make Account</string>
-      </property>
-     </widget>
-     <widget class="QWidget" name="topPanel" native="true">
+     <widget class="QFrame" name="frame_2">
       <property name="geometry">
        <rect>
         <x>0</x>
         <y>0</y>
         <width>781</width>
-        <height>101</height>
+        <height>741</height>
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">#topPanel {
-background-color:rgb(158, 218, 255)
+       <string notr="true">#frame_2
+{
+	background:rgba(0,0,0,0.2);
 }</string>
       </property>
-      <widget class="QLabel" name="label_title">
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <widget class="QFrame" name="frame">
        <property name="geometry">
         <rect>
-         <x>320</x>
-         <y>20</y>
-         <width>131</width>
-         <height>61</height>
+         <x>170</x>
+         <y>110</y>
+         <width>441</width>
+         <height>521</height>
         </rect>
        </property>
-       <property name="font">
-        <font>
-         <family>century gothic</family>
-         <pointsize>-1</pointsize>
-        </font>
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
        </property>
-       <property name="text">
-        <string>임시 제목</string>
+       <property name="frameShadow">
+        <enum>QFrame::Raised</enum>
        </property>
-      </widget>
-      <widget class="QWidget" name="widget_logo" native="true">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>0</y>
-         <width>181</width>
-         <height>111</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">#widget_logo {
-border-image:url(:/images/logo.png);
+       <widget class="QLineEdit" name="lineEdit_id_2">
+        <property name="geometry">
+         <rect>
+          <x>40</x>
+          <y>180</y>
+          <width>345</width>
+          <height>36</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>century gothic</family>
+          <pointsize>-1</pointsize>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">#lineEdit_id_2
+{
+background:transparent;
+border:none;
+clolr:#717072;
+border-bottom:1px solid #717072;
 }</string>
-       </property>
+        </property>
+        <property name="placeholderText">
+         <string>StudentID</string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="lineEdit_pw_2">
+        <property name="geometry">
+         <rect>
+          <x>40</x>
+          <y>310</y>
+          <width>345</width>
+          <height>36</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>century gothic</family>
+          <pointsize>-1</pointsize>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">#lineEdit_pw_2
+{
+background:transparent;
+border:none;
+clolr:#717072;
+border-bottom:1px solid #717072;
+}</string>
+        </property>
+        <property name="echoMode">
+         <enum>QLineEdit::Password</enum>
+        </property>
+        <property name="placeholderText">
+         <string>Password</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="Button_login_2">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>380</y>
+          <width>381</width>
+          <height>51</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>century gothic</family>
+          <pointsize>-1</pointsize>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">#Button_login_2
+{
+	background-color:rgba(151, 214, 255,0.6);
+}</string>
+        </property>
+        <property name="text">
+         <string>Log In</string>
+        </property>
+       </widget>
+       <widget class="QToolButton" name="iconButton">
+        <property name="geometry">
+         <rect>
+          <x>70</x>
+          <y>-10</y>
+          <width>291</width>
+          <height>131</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true"/>
+        </property>
+        <property name="text">
+         <string>...</string>
+        </property>
+        <property name="icon">
+         <iconset resource="src.qrc">
+          <normaloff>:/images/logo.png</normaloff>:/images/logo.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>400</width>
+          <height>400</height>
+         </size>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="Button_register">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>450</y>
+          <width>381</width>
+          <height>51</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>century gothic</family>
+          <pointsize>-1</pointsize>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">#Button_register
+{
+	background-color:rgba(151, 214, 255,0.6);
+}</string>
+        </property>
+        <property name="text">
+         <string>Registration</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_username">
+        <property name="geometry">
+         <rect>
+          <x>40</x>
+          <y>140</y>
+          <width>161</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">#label_username
+{
+	color:#fff;
+	background:transparent;
+	font-size:25px;
+}</string>
+        </property>
+        <property name="text">
+         <string>StudentID</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_password">
+        <property name="geometry">
+         <rect>
+          <x>40</x>
+          <y>270</y>
+          <width>161</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">#label_password
+{
+	color:#fff;
+	background:transparent;
+	font-size:25px;
+}</string>
+        </property>
+        <property name="text">
+         <string>Password</string>
+        </property>
+       </widget>
       </widget>
      </widget>
     </widget>
     <widget class="QWidget" name="after_log_page">
-     <widget class="QPushButton" name="Button_makeRoom">
+     <widget class="QFrame" name="frame_3">
       <property name="geometry">
        <rect>
-        <x>600</x>
-        <y>670</y>
+        <x>0</x>
+        <y>0</y>
+        <width>781</width>
+        <height>741</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">#frame_3
+{
+	background:rgba(0,0,0,0.2);
+}</string>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <widget class="QPushButton" name="Button_toHome">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>680</y>
+         <width>171</width>
+         <height>51</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Log Out</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="Button_makeRoom">
+       <property name="geometry">
+        <rect>
+         <x>600</x>
+         <y>670</y>
+         <width>161</width>
+         <height>51</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Make Room</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="pushButton">
+       <property name="geometry">
+        <rect>
+         <x>280</x>
+         <y>670</y>
+         <width>191</width>
+         <height>61</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>PushButton</string>
+       </property>
+      </widget>
+      <widget class="QTableWidget" name="tableWidget_roomlist">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>20</y>
+         <width>731</width>
+         <height>581</height>
+        </rect>
+       </property>
+      </widget>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="room_1">
+     <property name="styleSheet">
+      <string notr="true">#room_1
+{
+	border-image:url(:/images/bg1.jpg)0 0 0 0 stretch stretch;
+}</string>
+     </property>
+     <widget class="QTextEdit" name="Chatting_log">
+      <property name="geometry">
+       <rect>
+        <x>70</x>
+        <y>30</y>
+        <width>571</width>
+        <height>531</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineEdit_msg">
+      <property name="geometry">
+       <rect>
+        <x>70</x>
+        <y>630</y>
+        <width>441</width>
+        <height>31</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="send">
+      <property name="geometry">
+       <rect>
+        <x>540</x>
+        <y>620</y>
         <width>161</width>
         <height>51</height>
        </rect>
       </property>
       <property name="text">
-       <string>Make Room</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="Button_toHome">
-      <property name="geometry">
-       <rect>
-        <x>20</x>
-        <y>670</y>
-        <width>171</width>
-        <height>51</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Log Out</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_makeRoom">
-      <property name="geometry">
-       <rect>
-        <x>40</x>
-        <y>70</y>
-        <width>671</width>
-        <height>41</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string/>
+       <string>send</string>
       </property>
      </widget>
     </widget>
-    <widget class="QWidget" name="page"/>
    </widget>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="src.qrc"/>
+ </resources>
  <connections/>
 </ui>

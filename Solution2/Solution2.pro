@@ -28,22 +28,34 @@ SOURCES += \
     mainwindow.cpp \
     registration.cpp \
     makeroom.cpp \
-    labelclicked.cpp \
     cthread.cpp \
     json.cpp \
     chattingclient.cpp \
-    gthread.cpp
+    chattingclient.cpp \
+    cthread.cpp \
+    json.cpp \
+    main.cpp \
+    mainwindow.cpp \
+    makeroom.cpp \
+    registration.cpp \
+    custombutton.cpp
 
 HEADERS += \
         mainwindow.h \
     registration.h \
     makeroom.h \
-    labelclicked.h \
     chatexception.h \
     chattingclient.h \
     cthread.h \
     json.h \
-    gthread.h
+    chatexception.h \
+    chattingclient.h \
+    cthread.h \
+    json.h \
+    mainwindow.h \
+    makeroom.h \
+    registration.h \
+    custombutton.h
 
 FORMS += \
     mainwindow.ui \
@@ -54,3 +66,7 @@ RESOURCES += \
     src.qrc
 
 LIBS += -lwsock32 \
+
+DISTFILES += \
+    bg1.jpg \
+    bg1.jpg

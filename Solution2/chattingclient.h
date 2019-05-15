@@ -34,7 +34,7 @@ typedef struct _MSG {
 
 namespace MessageType
 {
-enum Type { LOGIN_PASS = 1, TEXT_MESSAGE = 2, ENTERROOM_REQUSET = 3 };
+    enum Type { LOGIN_PASS = 1, TEXT_MESSAGE = 2, ENTERROOM_REQUSET = 3, NEW_ACCOUNT = 4 };
 }
 
 class ChattingClient : public CThread{
@@ -52,7 +52,7 @@ public:
 
     ChattingClient& getChattingClient();
     SOCKET& getClientSocket();
-    void RedirectConnection(const char *ip, int port);
+    void RedirectConnection(const char *ip, int port, int numS515);
     void sendMessage(std::string message);
     virtual DWORD run(void);
 

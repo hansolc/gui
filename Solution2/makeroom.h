@@ -17,8 +17,17 @@ public:
     explicit MakeRoom(QWidget *parent = 0);
     ~MakeRoom();
 
+    int numStudent;
+    QString subject() const;
+    //int numStudent() const;
+    QString roomNumber() const;
+    void getNum(int numStudent);
+    int setNum();
+
 private slots:
     void on_pushButton_makeRoom_clicked();
+
+    void on_pushButton_close_clicked();
 
 private:
     Ui::MakeRoom *ui;

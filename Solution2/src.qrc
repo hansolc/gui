@@ -2,5 +2,11 @@
     <qresource prefix="/images">
         <file>bg.jpg</file>
         <file>logo.png</file>
+        <file>bg1.jpg</file>
+        <file>logo2.png</file>
+        <file>logo3.jpeg</file>
+    </qresource>
+    <qresource prefix="/room">
+        <file>logo2.png</file>
     </qresource>
 </RCC>
