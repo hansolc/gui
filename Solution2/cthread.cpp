@@ -8,6 +8,7 @@ DWORD WINAPI CThread::StaticThreadStart(LPVOID lpParam) {
 bool CThread::start() {
     if (hThread) {
         if (WaitForSingleObject(hThread, 0) == WAIT_TIMEOUT) {
+            std::cout<<"connectServer() error occur"<<std::endl;
             return false;
         }
         CloseHandle(hThread);

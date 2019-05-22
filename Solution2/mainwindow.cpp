@@ -19,7 +19,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     ui->lineEdit_pw_2->setPlaceholderText("Enter your password");
 
     char buf[16] = "127.0.0.1";
-    //char buf[16] = "172.31.36.88";
+    //char buf[16] = "172.31.37.201";
+    //char buf[16] = "192.168.0.189";
     int port = 3490;
 
     this->chattingClient = new ChattingClient(*this, buf, port);
@@ -74,12 +75,56 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
     ui->tableWidget_roomlist->setCellWidget(1, 2, (QWidget*)btn_join516);
     ui->tableWidget_roomlist->setCellWidget(2, 2, (QWidget*)btn_join517);
 
+    connect(btn_join515, SIGNAL(clicked(bool)), this, SLOT(btn_515_clicked()));
+    connect(btn_join516, SIGNAL(clicked(bool)), this, SLOT(btn_516_clicked()));
+    connect(btn_join517, SIGNAL(clicked(bool)), this, SLOT(btn_517_clicked()));
+
 
 }
+
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::btn_515_clicked()
+{
+    Json::Value root;
+    Json::FastWriter fastWriter;
+    std::string str;
+
+    root["type"] = MessageType::ENTERROOM_REQUSET;
+    str = fastWriter.write(root);
+    this->chattingClient->sendMessage(str);
+
+    ui->stackedWidget->setCurrentIndex(2);
+}
+
+void MainWindow::btn_516_clicked()
+{
+    Json::Value root;
+    Json::FastWriter fastWriter;
+    std::string str;
+
+    root["type"] = MessageType::ENTERROOM_REQUSET;
+    str = fastWriter.write(root);
+    this->chattingClient->sendMessage(str);
+
+    ui->stackedWidget->setCurrentIndex(3);
+}
+
+void MainWindow::btn_517_clicked()
+{
+    Json::Value root;
+    Json::FastWriter fastWriter;
+    std::string str;
+
+    root["type"] = MessageType::ENTERROOM_REQUSET;
+    str = fastWriter.write(root);
+    this->chattingClient->sendMessage(str);
+
+    ui->stackedWidget->setCurrentIndex(4);
 }
 
 void MainWindow::on_Button_register_clicked()
@@ -119,7 +164,6 @@ void MainWindow::on_Button_login_2_clicked()
     std::string str;
 
     makeRoom = new MakeRoom(this);
-
     root["type"] = MessageType::LOGIN_PASS;
     root["id"] = ui->lineEdit_id_2->text().toStdString();
     root["password"] = ui->lineEdit_pw_2->text().toStdString();
@@ -130,6 +174,11 @@ void MainWindow::on_Button_login_2_clicked()
     str = fastWriter.write(root);
     this->chattingClient->sendMessage(str);
 }
+
+//void MainWindow::rewrite()
+//{
+//    QMessageBox::information(this, "Unknown Account", "Unknown Account");
+//}
 
 // Making Room
 // admin: professor --> insert db info
@@ -176,18 +225,18 @@ void MainWindow::on_Button_toHome_clicked()
     //here: Log out service
 }
 
-void MainWindow::on_pushButton_clicked()
-{
-    Json::Value root;
-    Json::FastWriter fastWriter;
-    std::string str;
+//void MainWindow::on_pushButton_clicked()
+//{
+//    Json::Value root;
+//    Json::FastWriter fastWriter;
+//    std::string str;
 
-    root["type"] = MessageType::ENTERROOM_REQUSET;
-    str = fastWriter.write(root);
-    this->chattingClient->sendMessage(str);
+//    root["type"] = MessageType::ENTERROOM_REQUSET;
+//    str = fastWriter.write(root);
+//    this->chattingClient->sendMessage(str);
 
-    ui->stackedWidget->setCurrentIndex(2);
-}
+//    ui->stackedWidget->setCurrentIndex(2);
+//}
 
 void MainWindow::on_send_clicked()
 {

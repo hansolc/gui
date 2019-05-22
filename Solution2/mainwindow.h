@@ -33,10 +33,10 @@ private slots:
     void on_Button_login_2_clicked();
     void on_Button_makeRoom_clicked();
     void on_Button_toHome_clicked();
-
-    void on_pushButton_clicked();
-
     void on_send_clicked();
+    void btn_515_clicked();
+    void btn_516_clicked();
+    void btn_517_clicked();
 
 public slots:
     void changeStack(int index, int numS1);

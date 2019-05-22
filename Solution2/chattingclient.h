@@ -47,6 +47,7 @@ private:
     void connectServer();
 
 public:
+    ChattingClient();
     ChattingClient(MainWindow& mainWindow, const char *ip, int port);
     ~ChattingClient();
 

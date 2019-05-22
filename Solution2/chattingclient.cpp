@@ -3,8 +3,10 @@
 #include "chattingclient.h"
 
 const int ChattingClient::MAXSTRLEN = 255;
+SOCKET temp;
 
 ChattingClient::ChattingClient(MainWindow& mainWindow ,const char *ip, int port) {
+    std::cout<<"login server connect"<<std::endl;
     WSADATA wsaData;
     WSAStartup(MAKEWORD(2, 2), &wsaData);
 
@@ -13,7 +15,7 @@ ChattingClient::ChattingClient(MainWindow& mainWindow ,const char *ip, int port)
         throw ChatException(1000);
         WSACleanup();
     }
-    //mainwindow = mainwindow
+
     mainwindow = &mainWindow;
     memset(&this->server_address, 0, sizeof(this->server_address));
     this->server_address.sin_addr.S_un.S_addr = inet_addr(ip);
@@ -43,22 +45,26 @@ void ChattingClient::RedirectConnection(const char *ip, int port, int numS515)
     WSADATA wsaData;
     WSAStartup(MAKEWORD(2, 2), &wsaData);
 
-    std::cout << "prev_recv_redirect socket : " << client_socket << std::endl;
+    std::cout << "prev_recv_redirect socket : " << this->client_socket << std::endl;
 
     shutdown(this->client_socket, SD_SEND);
     this->client_socket = socket(AF_INET, SOCK_STREAM, 0);
+
     if (this->client_socket == INVALID_SOCKET) {
         throw ChatException(1000);
         WSACleanup();
     }
-    std::cout << "recv_redirect socket : " << client_socket << std::endl;
+    std::cout << "recv_redirect socket : " << this->client_socket << std::endl;
 
     memset(&this->server_address, 0, sizeof(this->server_address));
     this->server_address.sin_addr.S_un.S_addr = inet_addr(ip);
     this->server_address.sin_port = htons(port);
     this->server_address.sin_family = AF_INET;
-    //this->st->RedirectSocket(this->client_socket);
-    //(*st.RedirectSocket(this->client_socket);
+
+    //socket save
+    temp = this->client_socket;
+    std::cout << "temp socket : " << this->client_socket << std::endl;
+
     connectServer();
 
     //send SIGNAL to mainWindow
@@ -71,15 +77,14 @@ void ChattingClient::RedirectConnection(const char *ip, int port, int numS515)
 void ChattingClient::connectServer()
 {
     if (connect(this->client_socket, (SOCKADDR*)&this->server_address, sizeof(this->server_address)) == SOCKET_ERROR) {
+        std::cout<<"connectServer() error occur"<<std::endl;
         throw ChatException(1001);
     }
 }
 
 void ChattingClient::sendMessage(std::string message)
 {
-    std::cout<<"in sendMessage"<<std::endl;
-
-    this->st = new SendThread(client_socket, getChattingClient(), message);
+    this->st = new SendThread(this->client_socket, getChattingClient(), message);
     //st->RedirectSocket(this->client_socket);
     st->start();
     st->join();
@@ -98,7 +103,6 @@ int SendRecvInterface::recvMessage(SOCKET socket, char *buf) {
     Message msg;
     int len = 0;
     memset(&msg, 0, sizeof(Message));
-    std::cout << socket << std::endl;
     if (recv(socket, (char*)&msg, sizeof(Message), 0) <= 0) {
         return -1;
     }
@@ -119,7 +123,7 @@ int SendRecvInterface::sendMessage(SOCKET socket, const char *buf) {
     }
     if (send(socket, (const char*)&msg, sizeof(Message), 0) == SOCKET_ERROR)
     {
-        std::cout << "socket error" << std::endl;
+        std::cout<<WSAGetLastError()<<std::endl;
         return -1;
     }
     return 0;
@@ -127,16 +131,22 @@ int SendRecvInterface::sendMessage(SOCKET socket, const char *buf) {
 
 SendThread::SendThread(SOCKET cs, ChattingClient& cc, std::string param_message) : client_socket(cs), chatting_client(cc), message(param_message)
 {
-    std::cout<<"Address ChattingClient in ST: "<<&cc<<std::endl;
+
 }
 
+//hs modify part===============
+//about error 10058
 void SendThread::RedirectSocket(SOCKET sock)
 {
-    if(client_socket != sock)
+    //here***
+    std::cout<<"st_clinet_sock: "<< temp << "\nparameter sock: "<< sock<< std::endl;
+    std::cout<<"chatting_client_sock: "<<chatting_client.getClientSocket()<<std::endl;
+    if(temp != sock)
     {
         std::cout << "send_redirect!" << std::endl;
-        client_socket = sock;
+        client_socket = temp;
     }
+    this->run();
 }
 
 //std::string SendThread::ConvertMessageToJson()
@@ -187,7 +197,6 @@ void SendThread::RedirectSocket(SOCKET sock)
 
 DWORD SendThread::run(void) {
     try {
-        std::cout<<"in sendThread run function"<<std::endl;
         const char* message = this->message.c_str();
         if (exitUser(message)) {
             throw ChatException(2100);
@@ -195,13 +204,12 @@ DWORD SendThread::run(void) {
 
         std::cout <<"ST run before Redirection: "<<this->client_socket<<std::endl;
 
-        // if message correct
+        // part1
         if (sendMessage(this->client_socket, message) < 0)
         {
-            std::cout<<"====Redirection===="<<message<<std::endl;
-            //std::cout << "send_redirect socket : " << chatting_client.getClientSocket() << std::endl;
-            std::cout <<"ST run before Redirection in if loop: "<<this->client_socket<<std::endl;
+            chatting_client = chatting_client.getChattingClient();
             RedirectSocket(chatting_client.getClientSocket());
+            std::cout <<"ST after RedirectSocket: "<<this->client_socket<<std::endl;
         }
         else
         {
@@ -209,7 +217,6 @@ DWORD SendThread::run(void) {
         }
     }
     catch (ChatException e) {
-        std::cout<<"in catch func"<<std::endl;
         closesocket(this->client_socket);
     }
 }
@@ -222,7 +229,7 @@ bool SendThread::exitUser(const char *buf) {
 }
 
 RecvThread::RecvThread(SOCKET cs, ChattingClient& cc) : client_socket(cs), chatting_client(cc) {
-    std::cout<<"Address ChattingClient in RT: "<<&cc<<std::endl;
+
 }
 
 void RecvThread::RedirectSocket(SOCKET sock)
@@ -239,6 +246,7 @@ Json::Value RecvThread::ParseMessage(std::string message)
     return root;
 }
 
+
 DWORD RecvThread::run(void) {
     char buf[ChattingClient::MAXSTRLEN];
     while (true) {
@@ -247,7 +255,6 @@ DWORD RecvThread::run(void) {
             {
                 std::string message(buf);
                 Json::Value JsonToMessage = ParseMessage(message);
-                std::cout<<"json:===="<<JsonToMessage<<std::endl;
 
                 switch (JsonToMessage["type"].asInt())
                 {
@@ -263,13 +270,17 @@ DWORD RecvThread::run(void) {
                         int port = JsonToMessage["port"].asInt();
 
                         int numS515 = JsonToMessage["numS515"].asInt();
+
+                        std::cout<<"JsonToMessage: "<<JsonToMessage<<std::endl;
                         std::cout<<"numS515: "<<numS515<<std::endl;
+
                         chatting_client.RedirectConnection(ip, port, numS515);
 
                         //** edit
                     }
                     else {
-                        std::cout<<"in false loop"<<std::endl;
+                        //maybe log out??
+                        //HWS, JJH
                     }
                     break;
                 }
