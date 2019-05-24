@@ -4,6 +4,7 @@
 #define MAKEROOM_H
 
 #include <QDialog>
+#include "chattingclient.h"
 
 namespace Ui {
 class MakeRoom;
@@ -26,7 +27,6 @@ public:
 
 private slots:
     void on_pushButton_makeRoom_clicked();
-
     void on_pushButton_close_clicked();
 
 private:

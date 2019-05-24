@@ -5,6 +5,7 @@
         <file>bg1.jpg</file>
         <file>logo2.png</file>
         <file>logo3.jpeg</file>
+        <file>register.png</file>
     </qresource>
     <qresource prefix="/room">
         <file>logo2.png</file>

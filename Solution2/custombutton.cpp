@@ -5,3 +5,7 @@ CustomButton::CustomButton(const QString& text, QWidget* parent)
 {
 
 }
+
+CustomButton::~CustomButton() {
+    //
+}

@@ -12,10 +12,9 @@ Registration::Registration(QWidget *parent) :
     ui(new Ui::Registration)
 {
     ui->setupUi(this);
-    ui->lineEdit_id->setPlaceholderText("put you id here");
-    ui->lineEdit_pw->setPlaceholderText("put you pw here");
-    ui->lineEdit_pw->setPlaceholderText("put you phone-number here");
-    ui->lineEdit_email->setPlaceholderText("put you email here");
+    ui->lineEdit_id_2_reg->setPlaceholderText("put you id here");
+    ui->lineEdit_pw_2_reg->setPlaceholderText("put you pw here");
+
 }
 
 Registration::~Registration()
@@ -23,17 +22,17 @@ Registration::~Registration()
     delete ui;
 }
 
-void Registration::on_Button_registration_clicked()
+void Registration::on_Button_register_reg_clicked()
 {
-//    //here about db
-//    Json::Value root;
-//    Json::FastWriter fastWriter;
-//    std::string str;
+    //here about db
+    Json::Value root;
+    Json::FastWriter fastWriter;
+    std::string str;
 
-//    root["type"] = MessageType::NEW_ACCOUNT;
-//    root["id"] = ui->lineEdit_id->text().toStdString();
-//    root["password"] = ui->lineEdit_pw->text().toStdString();
+    root["type"] = MessageType::NEW_ACCOUNT;
+    root["id"] = ui->lineEdit_id_2_reg->text().toStdString();
+    root["password"] = ui->lineEdit_pw_2_reg->text().toStdString();
 
-//    str = fastWriter.write(root);
-//    this->chattingClient->sendMessage(str);
+    str = fastWriter.write(root);
+    this->chattingClient->sendMessage(str);
 }

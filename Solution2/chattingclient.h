@@ -34,7 +34,7 @@ typedef struct _MSG {
 
 namespace MessageType
 {
-    enum Type { LOGIN_PASS = 1, TEXT_MESSAGE = 2, ENTERROOM_REQUSET = 3, NEW_ACCOUNT = 4 };
+    enum Type { LOGIN_PASS = 1, TEXT_MESSAGE = 2, ENTERROOM_REQUSET = 3, NEW_ACCOUNT = 4, GET_STUDENT = 5 };
 }
 
 class ChattingClient : public CThread{
@@ -53,9 +53,13 @@ public:
 
     ChattingClient& getChattingClient();
     SOCKET& getClientSocket();
-    void RedirectConnection(const char *ip, int port, int numS515);
+    void RedirectConnection(const char *ip, int port, QString numS515, QString numS516, QString numS517);
     void sendMessage(std::string message);
     virtual DWORD run(void);
+    void regisSuccess();
+    void printMessage(QString msg);
+    void printMessage516(QString msg);
+    void printMessage517(QString msg);
 
     static const int MAXSTRLEN;
 };
@@ -85,6 +89,7 @@ class RecvThread : public SendRecvInterface {
 private:
     SOCKET client_socket;
     ChattingClient chatting_client;
+    int count;
 public:
     RecvThread(SOCKET cs, ChattingClient& cc);
     void RedirectSocket(SOCKET sock);

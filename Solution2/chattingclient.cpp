@@ -1,12 +1,12 @@
 #pragma once
 
 #include "chattingclient.h"
+#include <typeinfo>
 
 const int ChattingClient::MAXSTRLEN = 255;
 SOCKET temp;
 
 ChattingClient::ChattingClient(MainWindow& mainWindow ,const char *ip, int port) {
-    std::cout<<"login server connect"<<std::endl;
     WSADATA wsaData;
     WSAStartup(MAKEWORD(2, 2), &wsaData);
 
@@ -21,6 +21,10 @@ ChattingClient::ChattingClient(MainWindow& mainWindow ,const char *ip, int port)
     this->server_address.sin_addr.S_un.S_addr = inet_addr(ip);
     this->server_address.sin_port = htons(port);
     this->server_address.sin_family = AF_INET;
+
+    //login-server socket
+    temp = this->client_socket;
+
 }
 
 ChattingClient::~ChattingClient() {
@@ -40,12 +44,11 @@ SOCKET& ChattingClient::getClientSocket()
     return this->client_socket;
 }
 
-void ChattingClient::RedirectConnection(const char *ip, int port, int numS515)
+void ChattingClient::RedirectConnection(const char *ip, int port, QString numS515, QString numS516, QString numS517)
 {
+    std::cout<<"in RedirectConnection"<<std::endl;
     WSADATA wsaData;
     WSAStartup(MAKEWORD(2, 2), &wsaData);
-
-    std::cout << "prev_recv_redirect socket : " << this->client_socket << std::endl;
 
     shutdown(this->client_socket, SD_SEND);
     this->client_socket = socket(AF_INET, SOCK_STREAM, 0);
@@ -54,7 +57,6 @@ void ChattingClient::RedirectConnection(const char *ip, int port, int numS515)
         throw ChatException(1000);
         WSACleanup();
     }
-    std::cout << "recv_redirect socket : " << this->client_socket << std::endl;
 
     memset(&this->server_address, 0, sizeof(this->server_address));
     this->server_address.sin_addr.S_un.S_addr = inet_addr(ip);
@@ -63,13 +65,14 @@ void ChattingClient::RedirectConnection(const char *ip, int port, int numS515)
 
     //socket save
     temp = this->client_socket;
-    std::cout << "temp socket : " << this->client_socket << std::endl;
 
     connectServer();
 
+    std::cout<<"before signal"<<std::endl;
+
     //send SIGNAL to mainWindow
-    mainwindow->setNum(numS515);
-    mainwindow->changeIndex(1, numS515);
+    mainwindow->numChanged(numS515, numS516, numS517);
+    mainwindow->changeIndex(1);
 
 
 }
@@ -97,6 +100,27 @@ DWORD ChattingClient::run(void)
     rt->start();
     rt->join();
     return st->getExitCode();
+}
+
+void ChattingClient::regisSuccess()
+{
+    mainwindow->regisSignal();
+}
+
+void ChattingClient::printMessage(QString msg)
+{
+    std::cout<<"in printMessage"<<std::endl;
+    mainwindow->showMessage(msg);
+}
+
+void ChattingClient::printMessage516(QString msg)
+{
+    mainwindow->showMessage516(msg);
+}
+
+void ChattingClient::printMessage517(QString msg)
+{
+    mainwindow->showMessage517(msg);
 }
 
 int SendRecvInterface::recvMessage(SOCKET socket, char *buf) {
@@ -131,7 +155,10 @@ int SendRecvInterface::sendMessage(SOCKET socket, const char *buf) {
 
 SendThread::SendThread(SOCKET cs, ChattingClient& cc, std::string param_message) : client_socket(cs), chatting_client(cc), message(param_message)
 {
-
+    //hs modify part 190523
+    if(cs != temp) {
+        client_socket = temp;
+    }
 }
 
 //hs modify part===============
@@ -139,8 +166,7 @@ SendThread::SendThread(SOCKET cs, ChattingClient& cc, std::string param_message)
 void SendThread::RedirectSocket(SOCKET sock)
 {
     //here***
-    std::cout<<"st_clinet_sock: "<< temp << "\nparameter sock: "<< sock<< std::endl;
-    std::cout<<"chatting_client_sock: "<<chatting_client.getClientSocket()<<std::endl;
+    std::cout<<"shared-resource socket: "<< temp << "\nparameter sock: "<< sock<< std::endl;
     if(temp != sock)
     {
         std::cout << "send_redirect!" << std::endl;
@@ -202,14 +228,12 @@ DWORD SendThread::run(void) {
             throw ChatException(2100);
         }
 
-        std::cout <<"ST run before Redirection: "<<this->client_socket<<std::endl;
-
         // part1
         if (sendMessage(this->client_socket, message) < 0)
         {
-            chatting_client = chatting_client.getChattingClient();
-            RedirectSocket(chatting_client.getClientSocket());
-            std::cout <<"ST after RedirectSocket: "<<this->client_socket<<std::endl;
+//            chatting_client = chatting_client.getChattingClient();
+//            RedirectSocket(chatting_client.getClientSocket());
+//            std::cout <<"ST after RedirectSocket: "<<this->client_socket<<std::endl;
         }
         else
         {
@@ -269,12 +293,13 @@ DWORD RecvThread::run(void) {
                         char* ip = &writable[0];
                         int port = JsonToMessage["port"].asInt();
 
-                        int numS515 = JsonToMessage["numS515"].asInt();
+                        QString numS515 = QString::fromStdString(JsonToMessage["numS515"].asString());
+                        QString numS516 = QString::fromStdString(JsonToMessage["numS516"].asString());
+                        QString numS517 = QString::fromStdString(JsonToMessage["numS517"].asString());
 
                         std::cout<<"JsonToMessage: "<<JsonToMessage<<std::endl;
-                        std::cout<<"numS515: "<<numS515<<std::endl;
 
-                        chatting_client.RedirectConnection(ip, port, numS515);
+                        chatting_client.RedirectConnection(ip, port, numS515, numS516, numS517);
 
                         //** edit
                     }
@@ -286,14 +311,41 @@ DWORD RecvThread::run(void) {
                 }
                 case MessageType::TEXT_MESSAGE:
                 {
-                    //cout << JsonToMessage["id"] << " : " << JsonToMessage["text"] << endl;
-                    break;
+                    std::cout<<"message recevied froms server: "<<JsonToMessage<<std::endl;
+                    if(JsonToMessage["room"].asString() == "515")
+                    {
+                        QString msg = QString::fromStdString(JsonToMessage["text"].asString());
+                        chatting_client.printMessage(msg);
+                        break;
+                    }
+
+                    else if (JsonToMessage["room"].asString() == "516")
+                    {
+                        QString msg = QString::fromStdString(JsonToMessage["text"].asString());
+                        chatting_client.printMessage516(msg);
+                        break;
+                    }
+
+                    else if (JsonToMessage["room"].asString() == "517")
+                    {
+                        QString msg = QString::fromStdString(JsonToMessage["text"].asString());
+                        chatting_client.printMessage517(msg);
+                        break;
+                    }
+                    else
+                    {
+                        std::cout<<"Room Number Error"<<std::endl;
+                    }
+
+
                 }
 
+                //registration
                 case MessageType::NEW_ACCOUNT:
-
-
-
+                    if (JsonToMessage["pass"].asBool() == true)
+                    {
+                        chatting_client.regisSuccess();
+                    }
                 default:
                     break;
                 }

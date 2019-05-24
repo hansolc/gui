@@ -3,10 +3,11 @@
 #ifndef REGISTRATION_H
 #define REGISTRATION_H
 
-#include <QDialog>
-#include <QtSql>
-#include <QSqlDatabase>
+#include "chattingclient.h"
 #include "json.h"
+#include <QDialog>
+
+class ChattingClient;
 
 namespace Ui {
 class Registration;
@@ -18,14 +19,15 @@ class Registration : public QDialog
 
 public:
     explicit Registration(QWidget *parent = 0);
+    ChattingClient *chattingClient;
     ~Registration();
 
 private slots:
-    void on_Button_registration_clicked();
+    void on_Button_register_reg_clicked();
 
 private:
     Ui::Registration *ui;
-    //ChattingClient *chattingClient;
+
 };
 
 #endif // REGISTRATION_H
